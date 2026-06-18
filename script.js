@@ -1,103 +1,180 @@
 document.addEventListener("DOMContentLoaded", () => {
 
-  // ---- Scroll reveal ----
-  const reveals = document.querySelectorAll(".reveal");
+    // ---- Typing animation for subtitle ----
+    const subtitleEl = document.getElementById("typing-subtitle");
+    const subtitleText = "MBA Candidate & AI Enthusiast";
+    let charIndex = 0;
+    let isDeleting = false;
+    let typingDelay = 100;
 
-  const revealObserver = new IntersectionObserver(
-    (entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add("visible");
+    function typeEffect() {
+        const currentText = subtitleText;
+
+        if (isDeleting) {
+            subtitleEl.textContent = currentText.substring(0, charIndex - 1);
+            charIndex--;
+            typingDelay = 50;
+        } else {
+            subtitleEl.textContent = currentText.substring(0, charIndex + 1);
+            charIndex++;
+            typingDelay = 100;
         }
-      });
-    },
-    { threshold: 0.15 }
-  );
 
-  reveals.forEach((el) => revealObserver.observe(el));
-
-  // ---- Animated counters ----
-  const counters = document.querySelectorAll(".stat-num");
-
-  const counterObserver = new IntersectionObserver(
-    (entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          const el = entry.target;
-          const target = parseInt(el.dataset.target, 10);
-          animateCounter(el, target);
-          counterObserver.unobserve(el);
+        if (!isDeleting && charIndex === currentText.length) {
+            // Finished typing, pause before deleting
+            isDeleting = true;
+            typingDelay = 2500;
+        } else if (isDeleting && charIndex === 0) {
+            // Finished deleting, pause before typing again
+            isDeleting = false;
+            typingDelay = 600;
         }
-      });
-    },
-    { threshold: 0.5 }
-  );
 
-  counters.forEach((el) => counterObserver.observe(el));
-
-  function animateCounter(el, target) {
-    let current = 0;
-    const step = Math.ceil(target / 40);
-
-    function tick() {
-      current += step;
-      if (current > target) current = target;
-      el.textContent = current + (target > 10 ? "+" : "");
-      if (current < target) requestAnimationFrame(tick);
+        setTimeout(typeEffect, typingDelay);
     }
 
-    tick();
-  }
+    // Start typing animation after a short delay
+    setTimeout(typeEffect, 800);
 
-  // ---- Smooth scroll for nav links ----
-  document.querySelectorAll('.nav-links a[href^="#"]').forEach((link) => {
-    link.addEventListener("click", (e) => {
-      e.preventDefault();
-      const id = link.getAttribute("href");
-      document.querySelector(id)?.scrollIntoView({ behavior: "smooth" });
+    // ---- Scroll reveal ----
+    const reveals = document.querySelectorAll(".reveal");
+
+    const revealObserver = new IntersectionObserver(
+        (entries) => {
+            entries.forEach((entry) => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add("visible");
+                }
+            });
+        },
+        { threshold: 0.1, rootMargin: "0px 0px -60px 0px" }
+    );
+
+    reveals.forEach((el) => revealObserver.observe(el));
+
+    // ---- Navbar scroll effect ----
+    const navbar = document.getElementById("navbar");
+    window.addEventListener("scroll", () => {
+        if (window.scrollY > 50) {
+            navbar.classList.add("scrolled");
+        } else {
+            navbar.classList.remove("scrolled");
+        }
     });
-  });
 
-  // ---- Theme toggle (light/dark) ----
-  const toggle = document.querySelector(".theme-toggle");
-  let isDark = true;
+    // ---- Smooth scroll for nav links ----
+    document.querySelectorAll('.nav-links a[href^="#"]').forEach((link) => {
+        link.addEventListener("click", (e) => {
+            e.preventDefault();
+            const id = link.getAttribute("href");
+            document.querySelector(id)?.scrollIntoView({ behavior: "smooth" });
+        });
+    });
 
-  toggle?.addEventListener("click", () => {
-    isDark = !isDark;
-    const root = document.documentElement;
+    // Mobile nav links smooth scroll + close
+    document.querySelectorAll('.mobile-nav a[href^="#"]').forEach((link) => {
+        link.addEventListener("click", (e) => {
+            e.preventDefault();
+            const id = link.getAttribute("href");
+            document.querySelector(id)?.scrollIntoView({ behavior: "smooth" });
+            closeMobileMenu();
+        });
+    });
 
-    if (isDark) {
-      root.style.setProperty("--bg", "#0a0a0f");
-      root.style.setProperty("--bg-card", "#12121a");
-      root.style.setProperty("--bg-elevated", "#1a1a28");
-      root.style.setProperty("--text", "#e8e8ed");
-      root.style.setProperty("--text-muted", "#8888a0");
-      root.style.setProperty("--border", "#22223a");
-      root.style.setProperty("--nav-bg", "rgba(10, 10, 15, 0.8)");
-      toggle.textContent = "\u260C";
-    } else {
-      root.style.setProperty("--bg", "#f8f8fc");
-      root.style.setProperty("--bg-card", "#ffffff");
-      root.style.setProperty("--bg-elevated", "#f0f0f8");
-      root.style.setProperty("--text", "#1a1a2e");
-      root.style.setProperty("--text-muted", "#666680");
-      root.style.setProperty("--border", "#e0e0ec");
-      root.style.setProperty("--nav-bg", "rgba(248, 248, 252, 0.85)");
-      toggle.textContent = "\u263E";
+    // ---- Mobile menu toggle ----
+    const mobileMenuBtn = document.getElementById("mobile-menu");
+    const mobileNav = document.getElementById("mobile-nav");
+
+    function openMobileMenu() {
+        mobileMenuBtn.classList.add("active");
+        mobileNav.classList.add("active");
+        document.body.style.overflow = "hidden";
     }
-  });
 
-  // ---- Contact form (demo) ----
-  document.getElementById("contact-form")?.addEventListener("submit", (e) => {
-    e.preventDefault();
-    const btn = e.target.querySelector(".btn");
-    const orig = btn.textContent;
-    btn.textContent = "Message sent!";
-    btn.style.pointerEvents = "none";
-    setTimeout(() => {
-      btn.textContent = orig;
-      btn.style.pointerEvents = "";
-      e.target.reset();
-    }, 2500);
-  });
+    function closeMobileMenu() {
+        mobileMenuBtn.classList.remove("active");
+        mobileNav.classList.remove("active");
+        document.body.style.overflow = "";
+    }
+
+    mobileMenuBtn.addEventListener("click", () => {
+        if (mobileNav.classList.contains("active")) {
+            closeMobileMenu();
+        } else {
+            openMobileMenu();
+        }
+    });
+
+    // Close mobile menu on escape
+    document.addEventListener("keydown", (e) => {
+        if (e.key === "Escape" && mobileNav.classList.contains("active")) {
+            closeMobileMenu();
+        }
+    });
+
+    // ---- Parrot speech bubble ----
+    const parrotContainer = document.getElementById("parrot-container");
+    const speechBubble = document.getElementById("speech-bubble");
+    const bubbleText = document.getElementById("bubble-text");
+
+    const parrotPhrases = [
+        "Hello there! 👋",
+        "Squaak! Nice to meet you!",
+        "Lamu is awesome! 🦜",
+        "Check out my work below!",
+        "Polly wants a coffee! ☕",
+        "What's your favorite AI tool?",
+        "I'm a Senegal parrot!"
+    ];
+
+    let phraseIndex = 0;
+
+    function rotatePhrase() {
+        phraseIndex = (phraseIndex + 1) % parrotPhrases.length;
+        bubbleText.textContent = parrotPhrases[phraseIndex];
+    }
+
+    parrotContainer.addEventListener("mouseenter", () => {
+        rotatePhrase();
+        speechBubble.classList.add("visible");
+    });
+
+    parrotContainer.addEventListener("mouseleave", () => {
+        speechBubble.classList.remove("visible");
+    });
+
+    // Also show bubble periodically when idle
+    let bubbleTimeout;
+    function showBubblePeriodically() {
+        if (!speechBubble.classList.contains("visible")) {
+            rotatePhrase();
+            speechBubble.classList.add("visible");
+            setTimeout(() => {
+                speechBubble.classList.remove("visible");
+            }, 3000);
+        }
+        bubbleTimeout = setTimeout(showBubblePeriodically, 12000);
+    }
+
+    // Start periodic bubble after 5 seconds
+    setTimeout(showBubblePeriodically, 5000);
+
+    // ---- Scroll indicator click ----
+    document.querySelector(".scroll-indicator")?.addEventListener("click", () => {
+        document.getElementById("about")?.scrollIntoView({ behavior: "smooth" });
+    });
+
+    // ---- Contact form (demo) ----
+    document.getElementById("contact-form")?.addEventListener("submit", (e) => {
+        e.preventDefault();
+        const btn = e.target.querySelector(".btn");
+        const orig = btn.textContent;
+        btn.textContent = "Message sent!";
+        btn.style.pointerEvents = "none";
+        setTimeout(() => {
+            btn.textContent = orig;
+            btn.style.pointerEvents = "";
+            e.target.reset();
+        }, 2500);
+    });
 });

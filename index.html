@@ -6,636 +6,8 @@
     <title>Lamu Kasha | Portfolio</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            --primary: #1a1a2e;
-            --secondary: #16213e;
-            --accent: #0f3460;
-            --highlight: #e94560;
-            --text: #333;
-            --text-light: #666;
-            --bg: #fafafa;
-            --white: #ffffff;
-            --transition: all 0.3s ease;
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        html {
-            scroll-behavior: smooth;
-        }
-
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: var(--bg);
-            color: var(--text);
-            line-height: 1.6;
-            overflow-x: hidden;
-        }
-
-        /* Navigation */
-        nav {
-            position: fixed;
-            top: 0;
-            width: 100%;
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
-            z-index: 1000;
-            padding: 1rem 0;
-            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.05);
-            transition: var(--transition);
-        }
-
-        nav.scrolled {
-            padding: 0.7rem 0;
-            box-shadow: 0 2px 30px rgba(0, 0, 0, 0.1);
-        }
-
-        .nav-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 2rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .logo {
-            font-family: 'Playfair Display', serif;
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: var(--primary);
-            text-decoration: none;
-        }
-
-        .nav-links {
-            display: flex;
-            gap: 2.5rem;
-            list-style: none;
-        }
-
-        .nav-links a {
-            text-decoration: none;
-            color: var(--text);
-            font-weight: 500;
-            font-size: 0.95rem;
-            transition: var(--transition);
-            position: relative;
-        }
-
-        .nav-links a::after {
-            content: '';
-            position: absolute;
-            bottom: -5px;
-            left: 0;
-            width: 0;
-            height: 2px;
-            background: var(--highlight);
-            transition: var(--transition);
-        }
-
-        .nav-links a:hover {
-            color: var(--highlight);
-        }
-
-        .nav-links a:hover::after {
-            width: 100%;
-        }
-
-        .mobile-menu {
-            display: none;
-            flex-direction: column;
-            gap: 5px;
-            cursor: pointer;
-        }
-
-        .mobile-menu span {
-            width: 25px;
-            height: 2px;
-            background: var(--primary);
-            transition: var(--transition);
-        }
-
-        /* Hero Section */
-        .hero {
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 50%, var(--accent) 100%);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .hero::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            right: -20%;
-            width: 600px;
-            height: 600px;
-            background: rgba(233, 69, 96, 0.1);
-            border-radius: 50%;
-            animation: float 6s ease-in-out infinite;
-        }
-
-        .hero::after {
-            content: '';
-            position: absolute;
-            bottom: -30%;
-            left: -10%;
-            width: 400px;
-            height: 400px;
-            background: rgba(255, 255, 255, 0.03);
-            border-radius: 50%;
-            animation: float 8s ease-in-out infinite reverse;
-        }
-
-        @keyframes float {
-            0%, 100% { transform: translateY(0) scale(1); }
-            50% { transform: translateY(-20px) scale(1.05); }
-        }
-
-        .hero-content {
-            text-align: center;
-            color: var(--white);
-            z-index: 1;
-            padding: 0 2rem;
-            max-width: 800px;
-            animation: fadeInUp 1s ease-out;
-        }
-
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .hero h1 {
-            font-family: 'Playfair Display', serif;
-            font-size: 4rem;
-            font-weight: 700;
-            margin-bottom: 1rem;
-            letter-spacing: -1px;
-        }
-
-        .hero .subtitle {
-            font-size: 1.5rem;
-            font-weight: 300;
-            margin-bottom: 0.5rem;
-            opacity: 0.9;
-        }
-
-        .hero .tagline {
-            font-size: 1.1rem;
-            opacity: 0.7;
-            margin-bottom: 2rem;
-        }
-
-        .cta-button {
-            display: inline-block;
-            padding: 1rem 2.5rem;
-            background: var(--highlight);
-            color: var(--white);
-            text-decoration: none;
-            border-radius: 50px;
-            font-weight: 600;
-            transition: var(--transition);
-            border: 2px solid var(--highlight);
-        }
-
-        .cta-button:hover {
-            background: transparent;
-            color: var(--white);
-            transform: translateY(-2px);
-            box-shadow: 0 10px 30px rgba(233, 69, 96, 0.3);
-        }
-
-        .scroll-indicator {
-            position: absolute;
-            bottom: 2rem;
-            left: 50%;
-            transform: translateX(-50%);
-            color: var(--white);
-            opacity: 0.6;
-            animation: bounce 2s infinite;
-        }
-
-        @keyframes bounce {
-            0%, 20%, 50%, 80%, 100% { transform: translateX(-50%) translateY(0); }
-            40% { transform: translateX(-50%) translateY(-10px); }
-            60% { transform: translateX(-50%) translateY(-5px); }
-        }
-
-        /* Section Styles */
-        section {
-            padding: 6rem 2rem;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .section-title {
-            font-family: 'Playfair Display', serif;
-            font-size: 2.5rem;
-            color: var(--primary);
-            margin-bottom: 3rem;
-            text-align: center;
-            position: relative;
-        }
-
-        .section-title::after {
-            content: '';
-            display: block;
-            width: 60px;
-            height: 3px;
-            background: var(--highlight);
-            margin: 1rem auto 0;
-            border-radius: 2px;
-        }
-
-        /* About Section */
-        .about {
-            background: var(--white);
-        }
-
-        .about-content {
-            display: grid;
-            grid-template-columns: 1fr 2fr;
-            gap: 4rem;
-            align-items: center;
-        }
-
-        .about-image {
-            position: relative;
-        }
-
-        .about-image-placeholder {
-            width: 100%;
-            aspect-ratio: 1;
-            background: linear-gradient(135deg, var(--accent), var(--highlight));
-            border-radius: 20px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--white);
-            font-size: 4rem;
-            font-family: 'Playfair Display', serif;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
-        }
-
-        .about-text h3 {
-            font-size: 1.8rem;
-            color: var(--primary);
-            margin-bottom: 1rem;
-        }
-
-        .about-text p {
-            color: var(--text-light);
-            margin-bottom: 1rem;
-            font-size: 1.05rem;
-        }
-
-        .skills {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.75rem;
-            margin-top: 1.5rem;
-        }
-
-        .skill-tag {
-            padding: 0.5rem 1rem;
-            background: var(--bg);
-            border-radius: 50px;
-            font-size: 0.9rem;
-            color: var(--text);
-            border: 1px solid #e0e0e0;
-            transition: var(--transition);
-        }
-
-        .skill-tag:hover {
-            background: var(--primary);
-            color: var(--white);
-            transform: translateY(-2px);
-        }
-
-        /* Education Section */
-        .education {
-            background: var(--bg);
-        }
-
-        .timeline {
-            position: relative;
-            max-width: 800px;
-            margin: 0 auto;
-        }
-
-        .timeline::before {
-            content: '';
-            position: absolute;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 2px;
-            height: 100%;
-            background: linear-gradient(to bottom, var(--highlight), var(--accent));
-        }
-
-        .timeline-item {
-            position: relative;
-            margin-bottom: 3rem;
-            width: 50%;
-            padding: 0 2rem;
-        }
-
-        .timeline-item:nth-child(odd) {
-            left: 0;
-            text-align: right;
-        }
-
-        .timeline-item:nth-child(even) {
-            left: 50%;
-            text-align: left;
-        }
-
-        .timeline-dot {
-            position: absolute;
-            width: 20px;
-            height: 20px;
-            background: var(--highlight);
-            border-radius: 50%;
-            top: 0;
-        }
-
-        .timeline-item:nth-child(odd) .timeline-dot {
-            right: -10px;
-        }
-
-        .timeline-item:nth-child(even) .timeline-dot {
-            left: -10px;
-        }
-
-        .timeline-content {
-            background: var(--white);
-            padding: 2rem;
-            border-radius: 15px;
-            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
-            transition: var(--transition);
-        }
-
-        .timeline-content:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.12);
-        }
-
-        .timeline-content h3 {
-            color: var(--primary);
-            font-size: 1.3rem;
-            margin-bottom: 0.5rem;
-        }
-
-        .timeline-content .institution {
-            color: var(--highlight);
-            font-weight: 600;
-            margin-bottom: 0.5rem;
-        }
-
-        .timeline-content .date {
-            color: var(--text-light);
-            font-size: 0.9rem;
-            margin-bottom: 1rem;
-        }
-
-        .timeline-content p {
-            color: var(--text-light);
-            font-size: 0.95rem;
-        }
-
-        /* Experience Section */
-        .experience {
-            background: var(--white);
-        }
-
-        .experience-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            gap: 2rem;
-        }
-
-        .experience-card {
-            background: var(--bg);
-            padding: 2.5rem;
-            border-radius: 20px;
-            transition: var(--transition);
-            border: 1px solid #f0f0f0;
-        }
-
-        .experience-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
-            border-color: transparent;
-        }
-
-        .experience-card .company {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            margin-bottom: 1rem;
-        }
-
-        .company-logo {
-            width: 50px;
-            height: 50px;
-            background: linear-gradient(135deg, var(--accent), var(--highlight));
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--white);
-            font-weight: 700;
-            font-size: 1.2rem;
-        }
-
-        .company-info h3 {
-            color: var(--primary);
-            font-size: 1.2rem;
-        }
-
-        .company-info .role {
-            color: var(--highlight);
-            font-weight: 600;
-            font-size: 0.95rem;
-        }
-
-        .experience-card .date {
-            color: var(--text-light);
-            font-size: 0.9rem;
-            margin-bottom: 1rem;
-        }
-
-        .experience-card p {
-            color: var(--text-light);
-            font-size: 0.95rem;
-            line-height: 1.7;
-        }
-
-        .experience-card ul {
-            margin-top: 1rem;
-            padding-left: 1.5rem;
-            color: var(--text-light);
-        }
-
-        .experience-card li {
-            margin-bottom: 0.5rem;
-            font-size: 0.95rem;
-        }
-
-        /* Contact Section */
-        .contact {
-            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
-            color: var(--white);
-            text-align: center;
-            padding: 6rem 2rem;
-        }
-
-        .contact .section-title {
-            color: var(--white);
-        }
-
-        .contact .section-title::after {
-            background: var(--highlight);
-        }
-
-        .contact-content {
-            max-width: 600px;
-            margin: 0 auto;
-        }
-
-        .contact-text {
-            font-size: 1.1rem;
-            opacity: 0.9;
-            margin-bottom: 2rem;
-        }
-
-        .contact-links {
-            display: flex;
-            justify-content: center;
-            gap: 2rem;
-            flex-wrap: wrap;
-        }
-
-        .contact-link {
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-            padding: 1rem 2rem;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 50px;
-            color: var(--white);
-            text-decoration: none;
-            transition: var(--transition);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-        }
-
-        .contact-link:hover {
-            background: var(--highlight);
-            transform: translateY(-3px);
-            box-shadow: 0 10px 30px rgba(233, 69, 96, 0.3);
-        }
-
-        .contact-link svg {
-            width: 20px;
-            height: 20px;
-        }
-
-        /* Footer */
-        footer {
-            background: var(--primary);
-            color: var(--white);
-            text-align: center;
-            padding: 2rem;
-            font-size: 0.9rem;
-            opacity: 0.8;
-        }
-
-        /* Responsive Design */
-        @media (max-width: 768px) {
-            .nav-links {
-                display: none;
-            }
-
-            .mobile-menu {
-                display: flex;
-            }
-
-            .hero h1 {
-                font-size: 2.5rem;
-            }
-
-            .hero .subtitle {
-                font-size: 1.2rem;
-            }
-
-            .about-content {
-                grid-template-columns: 1fr;
-                text-align: center;
-            }
-
-            .about-image {
-                max-width: 250px;
-                margin: 0 auto;
-            }
-
-            .timeline::before {
-                left: 20px;
-            }
-
-            .timeline-item {
-                width: 100%;
-                left: 0 !important;
-                padding-left: 3rem;
-                text-align: left !important;
-            }
-
-            .timeline-item .timeline-dot {
-                left: 10px !important;
-                right: auto !important;
-            }
-
-            .experience-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .contact-links {
-                flex-direction: column;
-                align-items: center;
-            }
-
-            section {
-                padding: 4rem 1.5rem;
-            }
-        }
-
-        /* Fade in animation on scroll */
-        .fade-in {
-            opacity: 0;
-            transform: translateY(30px);
-            transition: opacity 0.8s ease, transform 0.8s ease;
-        }
-
-        .fade-in.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <!-- Navigation -->
@@ -648,7 +20,7 @@
                 <li><a href="#experience">Experience</a></li>
                 <li><a href="#contact">Contact</a></li>
             </ul>
-            <div class="mobile-menu">
+            <div class="mobile-menu" id="mobile-menu">
                 <span></span>
                 <span></span>
                 <span></span>
@@ -656,27 +28,79 @@
         </div>
     </nav>
 
+    <!-- Mobile Nav Overlay -->
+    <div class="mobile-nav" id="mobile-nav">
+        <a href="#about">About</a>
+        <a href="#education">Education</a>
+        <a href="#experience">Experience</a>
+        <a href="#contact">Contact</a>
+    </div>
+
     <!-- Hero Section -->
     <section class="hero">
+        <div class="hero-bg-decor">
+            <div class="blob blob-1"></div>
+            <div class="blob blob-2"></div>
+        </div>
         <div class="hero-content">
             <h1>Lamu Kasha</h1>
-            <p class="subtitle">MBA Candidate & AI Enthusiast</p>
+            <p class="subtitle" id="typing-subtitle"></p>
             <p class="tagline">Building bridges between business strategy and artificial intelligence</p>
             <a href="#contact" class="cta-button">Get In Touch</a>
         </div>
+
+        <!-- Senegal Parrot -->
+        <div class="parrot-container" id="parrot-container">
+            <div class="speech-bubble" id="speech-bubble">
+                <span id="bubble-text">Hello there! 👋</span>
+                <div class="bubble-tail"></div>
+            </div>
+            <svg class="parrot-svg" viewBox="0 0 200 240" xmlns="http://www.w3.org/2000/svg">
+                <!-- Tail -->
+                <path class="parrot-tail" d="M95 165 Q 80 210 75 230 Q 85 215 95 200 Q 100 210 105 230 Q 100 210 95 165" fill="#C9414E" />
+                <!-- Body -->
+                <path class="parrot-body" d="M75 70 Q 50 90 55 140 Q 60 170 85 175 Q 110 180 120 160 Q 130 130 125 100 Q 120 75 100 65 Q 85 60 75 70" fill="#5BA85C" />
+                <!-- Wing -->
+                <path class="parrot-wing" d="M85 85 Q 70 100 72 135 Q 75 155 90 160 Q 100 145 105 120 Q 108 100 100 85 Q 92 80 85 85" fill="#4A8F4B" />
+                <!-- Grey head -->
+                <path class="parrot-head" d="M75 70 Q 70 50 80 35 Q 90 25 105 28 Q 118 32 120 45 Q 122 58 115 68 Q 108 78 95 75 Q 85 73 75 70" fill="#7A7A7A" />
+                <!-- Face patch -->
+                <path class="parrot-face" d="M85 55 Q 90 52 98 54 Q 102 58 100 65 Q 95 68 88 66 Q 83 62 85 55" fill="#A0A0A0" />
+                <!-- Yellow/orange belly -->
+                <path class="parrot-belly" d="M65 120 Q 62 145 72 162 Q 82 170 95 168 Q 88 155 85 135 Q 82 115 80 105 Q 72 108 65 120" fill="#E8A838" />
+                <!-- Beak -->
+                <path class="parrot-beak" d="M118 48 Q 128 45 132 52 Q 130 58 122 58 Q 118 55 118 48" fill="#4A3728" />
+                <path class="parrot-beak-lower" d="M122 58 Q 128 60 126 65 Q 122 64 120 60" fill="#5A4738" />
+                <!-- Eye -->
+                <circle class="parrot-eye" cx="108" cy="48" r="4" fill="#1A1A1A" />
+                <circle class="parrot-eye-shine" cx="109" cy="47" r="1.5" fill="#FFFFFF" />
+                <!-- Legs -->
+                <path class="parrot-leg" d="M82 172 Q 82 185 80 192" stroke="#C96442" stroke-width="3" fill="none" stroke-linecap="round" />
+                <path class="parrot-leg" d="M95 175 Q 95 188 93 195" stroke="#C96442" stroke-width="3" fill="none" stroke-linecap="round" />
+                <!-- Feet -->
+                <path class="parrot-foot" d="M76 190 Q 72 195 78 198 M80 192 Q 80 198 84 198" stroke="#C96442" stroke-width="2.5" fill="none" stroke-linecap="round" />
+                <path class="parrot-foot" d="M89 193 Q 85 198 91 201 M93 195 Q 93 201 97 201" stroke="#C96442" stroke-width="2.5" fill="none" stroke-linecap="round" />
+                <!-- Perch -->
+                <line x1="60" y1="198" x2="115" y2="198" stroke="#8B6914" stroke-width="4" stroke-linecap="round" />
+            </svg>
+        </div>
+
         <div class="scroll-indicator">
             <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <path d="M7 13l5 5 5-5M7 6l5 5 5-5"/>
+                <path d="M12 5v14M5 12l7 7 7-7"/>
             </svg>
         </div>
     </section>
 
     <!-- About Section -->
     <section id="about" class="about">
-        <h2 class="section-title fade-in">About Me</h2>
-        <div class="about-content fade-in">
+        <h2 class="section-title reveal">About Me</h2>
+        <div class="about-content reveal">
             <div class="about-image">
-                <div class="about-image-placeholder">LK</div>
+                <div class="about-image-placeholder">
+                    <span class="initials">LK</span>
+                    <div class="about-image-blob"></div>
+                </div>
             </div>
             <div class="about-text">
                 <h3>Driven by curiosity, powered by purpose</h3>
@@ -696,9 +120,9 @@
 
     <!-- Education Section -->
     <section id="education" class="education">
-        <h2 class="section-title fade-in">Education</h2>
+        <h2 class="section-title reveal">Education</h2>
         <div class="timeline">
-            <div class="timeline-item fade-in">
+            <div class="timeline-item reveal">
                 <div class="timeline-dot"></div>
                 <div class="timeline-content">
                     <h3>Master of Business Administration (MBA)</h3>
@@ -707,15 +131,14 @@
                     <p>Pursuing advanced studies in business administration with a focus on technology management and innovation strategy at one of Japan's most prestigious business schools.</p>
                 </div>
             </div>
-            <!-- Add more education items here if needed -->
         </div>
     </section>
 
     <!-- Experience Section -->
     <section id="experience" class="experience">
-        <h2 class="section-title fade-in">Experience</h2>
+        <h2 class="section-title reveal">Experience</h2>
         <div class="experience-grid">
-            <div class="experience-card fade-in">
+            <div class="experience-card reveal">
                 <div class="company">
                     <div class="company-logo">ai&</div>
                     <div class="company-info">
@@ -732,14 +155,13 @@
                     <li>Assisting in the development of AI-powered business solutions</li>
                 </ul>
             </div>
-            <!-- Add more experience cards here if needed -->
         </div>
     </section>
 
     <!-- Contact Section -->
     <section id="contact" class="contact">
-        <h2 class="section-title fade-in">Let's Connect</h2>
-        <div class="contact-content fade-in">
+        <h2 class="section-title reveal">Let's Connect</h2>
+        <div class="contact-content reveal">
             <p class="contact-text">I'm always interested in discussing business strategy, AI innovation, and new opportunities. Feel free to reach out!</p>
             <div class="contact-links">
                 <a href="mailto:lamu.kasha@example.com" class="contact-link">
@@ -770,48 +192,6 @@
         <p>&copy; 2026 Lamu Kasha. All rights reserved.</p>
     </footer>
 
-    <script>
-        // Navbar scroll effect
-        const navbar = document.getElementById('navbar');
-        window.addEventListener('scroll', () => {
-            if (window.scrollY > 50) {
-                navbar.classList.add('scrolled');
-            } else {
-                navbar.classList.remove('scrolled');
-            }
-        });
-
-        // Fade in animation on scroll
-        const fadeElements = document.querySelectorAll('.fade-in');
-        
-        const fadeObserver = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('visible');
-                }
-            });
-        }, {
-            threshold: 0.1,
-            rootMargin: '0px 0px -50px 0px'
-        });
-
-        fadeElements.forEach(element => {
-            fadeObserver.observe(element);
-        });
-
-        // Smooth scrolling for navigation links
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    target.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'start'
-                    });
-                }
-            });
-        });
-    </script>
+    <script src="script.js"></script>
 </body>
 </html>
